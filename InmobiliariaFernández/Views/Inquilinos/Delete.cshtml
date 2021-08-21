@@ -1,0 +1,15 @@
+﻿@model InmobiliariaFernández.Models.Inquilino
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Dar de baja inquilino</h1>
+
+<h3>¿Esta Seguro que desea dar de bajar este inquilino?</h3>
+<div>
+    <form asp-action="Delete">
+        <input type="submit" value="Dar de Baja" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
