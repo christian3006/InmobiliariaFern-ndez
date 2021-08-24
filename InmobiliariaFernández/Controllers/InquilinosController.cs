@@ -48,7 +48,8 @@ public class InquilinosController : Controller
     // GET: InquilinosController/Edit/5
     public ActionResult Edit(int id)
     {
-        return View();
+        var i = repositorio.ObtenerPorId(id);
+        return View(i);
     }
 
     // POST: InquilinosController/Edit/5
@@ -64,14 +65,15 @@ public class InquilinosController : Controller
         }
         catch
         {
-            return View();
+            return View(i);
         }
     }
 
     // GET: InquilinosController/Delete/5
     public ActionResult Delete(int id)
     {
-        return View();
+        var i = repositorio.ObtenerPorId(id);
+        return View(i);
     }
 
     // POST: InquilinosController/Delete/5
@@ -86,7 +88,7 @@ public class InquilinosController : Controller
         }
         catch
         {
-            return View();
+            return View(i);
         }
     }
 }

@@ -103,6 +103,40 @@ SELECT SCOPE_IDENTITY();";
             return e;
         }
 
+        public Propietario ObtenerPPorId(int id)
+        {
+            Propietario p = null;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string sql = $"SELECT id, Nombre, Apellido, NroDpto, Dni, Telefono FROM Propietario" +
+                    $" WHERE ID=@id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@idpropietario", SqlDbType.Int).Value = id;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        p = new Propietario
+                        {
+                            IdPropietario = reader.GetInt32(0),
+                            Nombre = reader.GetString(1),
+                            Apellido = reader.GetString(2),
+                            Dni = reader.GetString(3),
+                            Telefono = reader.GetString(4),
+                            Email = reader.GetString(5),
+                            Clave = reader.GetString(5)
+
+                        };
+                        return p;
+                    }
+                    connection.Close();
+                }
+            }
+            return p;
+        }
+
         public int BajaP(int idpropietario)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))

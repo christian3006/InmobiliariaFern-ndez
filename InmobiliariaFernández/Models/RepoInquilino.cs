@@ -94,6 +94,41 @@ SELECT SCOPE_IDENTITY();";
         }
     }
 
+    public Inquilino ObtenerPorId(int id)
+    {
+        Inquilino p = null;
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            string sql = $"SELECT id, Nombre, Apellido, NroDpto, Dni, Telefono FROM Inquilino" +
+                $" WHERE ID=@id";
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.CommandType = CommandType.Text;
+                command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    p = new Inquilino
+                    {
+                        id = reader.GetInt32(0),
+                        Nombre = reader.GetString(1),
+                        Apellido = reader.GetString(2),
+                        NroDpto= reader.GetString(3),
+                        DNI = reader.GetString(4),
+                        Telefono = reader.GetString(5),
+               
+                    };
+                    return p;
+                }
+                connection.Close();
+            }
+        }
+        return p;
+    }
+
+
+
         public int Baja(int id)
         {
             using (SqlConnection conn = new SqlConnection(connectionString)) {

@@ -50,7 +50,8 @@ namespace InmobiliariaFernández.Controllers
         // GET: PropietariosController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var p= repoP.ObtenerPPorId(id); 
+            return View(p);
         }
 
         // POST: PropietariosController/Edit/5
@@ -72,14 +73,15 @@ namespace InmobiliariaFernández.Controllers
             }
             catch
             {
-                return View();
+                return View(pr);
             }
         }
 
         // GET: PropietariosController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            var p = repoP.ObtenerPPorId(id);
+            return View(p);
         }
 
         // POST: PropietariosController/Delete/5
@@ -94,7 +96,7 @@ namespace InmobiliariaFernández.Controllers
             }
             catch
             {
-                return View();
+                return View(P);
             }
         }
     }
