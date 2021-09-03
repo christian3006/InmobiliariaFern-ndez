@@ -62,7 +62,8 @@
             </td>
             <td>
                 @Html.ActionLink("Modificar datos", "Edit", new {  id=item.IdPropietario  }) |
-                @Html.ActionLink("Dar de baja", "Delete", new {  id=item.IdPropietario  })
+                @Html.ActionLink("Dar de baja", "Delete", new {  id=item.IdPropietario  }) | 
+                @Html.ActionLink("Detalles", "Details", new {  id=item.IdPropietario  })
             </td>
         </tr>
 }

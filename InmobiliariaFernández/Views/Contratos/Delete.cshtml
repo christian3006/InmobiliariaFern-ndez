@@ -1,0 +1,17 @@
+﻿@model InmobiliariaFernández.Models.Contrato
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Eliminar Contrato</h1>
+
+<h3>Desea Eliminar este contrato?</h3>
+<div>
+    <h4>Contrato</h4>
+    <hr/>
+    <form asp-action="Delete">
+        <input type="submit" value="Eliminar Contrato" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver al inicio</a>
+    </form>
+</div>

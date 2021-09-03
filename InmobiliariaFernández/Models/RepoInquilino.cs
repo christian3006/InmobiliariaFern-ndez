@@ -6,11 +6,10 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-public class RepoInquilino
+public class RepoInquilino : RepoBase
 {
-    String connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=InmobiliariaFernandez;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-    public RepoInquilino()
+    public RepoInquilino(IConfiguration configuration) : base(configuration) 
     {
 
     }

@@ -7,9 +7,9 @@ namespace InmobiliariaFernández.Controllers
     {
         RepoPropietario repoP;
 
-        public PropietariosController()
+        public PropietariosController(IConfiguration configuration)
         {
-            repoP = new RepoPropietario();
+            repoP = new RepoPropietario(configuration);
         }
 
         // GET: PropietariosController
@@ -22,7 +22,8 @@ namespace InmobiliariaFernández.Controllers
         // GET: PropietariosController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var p = repoP.ObtenerPPorId(id);
+            return View(p);
         }
 
         // GET: PropietariosController/Create

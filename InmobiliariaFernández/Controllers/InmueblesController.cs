@@ -6,20 +6,22 @@ public class InmueblesController : Controller
 {
     private readonly RepoInmuebles repoI;
     private readonly RepoPropietario repoP;
-    private readonly RepoBase repoB;
+    
+    protected readonly IConfiguration configuration;
 
-    public InmueblesController()
+    public InmueblesController(IConfiguration configuration)
     {
         this.repoI = repoI;
         this.repoP = repoP;
-        this.repoB = repoB;
+        this.configuration = configuration;
+        repoI = new RepoInmuebles(configuration);
     }
 
     // GET: InmueblesController
     public ActionResult Index()
     {
         var listar = repoI.ObtenerTodos();
-        if(TempData.ContainsKey("id"))
+        if (TempData.ContainsKey("id"))
             ViewBag.id = TempData["id"];
         if (TempData.ContainsKey("mensaje"))
             ViewBag.mensaje = TempData["mensaje"];
@@ -29,69 +31,106 @@ public class InmueblesController : Controller
     // GET: InmueblesController/Details/5
     public ActionResult Details(int id)
     {
-        return View();
+        var entity = repoI.ObtenerTodos();
+        return View(id);
     }
 
     // GET: InmueblesController/Create
     public ActionResult Create()
     {
+        ViewBag.Propietarios = repoP.ObtenerPropietarios();
         return View();
     }
 
     // POST: InmueblesController/Create
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(IFormCollection collection)
+    public ActionResult Create(Inmueble inmueble)
     {
         try
         {
-            return RedirectToAction(nameof(Index));
+            if (ModelState.IsValid)
+            {
+                repoI.Alta(inmueble);
+                TempData["id"] = inmueble.id;
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ViewBag.Propietario = repoP.ObtenerPropietarios();
+                return View(inmueble);
+            }
         }
-        catch
+        catch (Exception ex)
         {
-            return View();
+            ViewBag.Error = ex.Message;
+            ViewBag.StackTrace = ex.StackTrace;
+            return View(inmueble);
         }
     }
+
+
 
     // GET: InmueblesController/Edit/5
     public ActionResult Edit(int id)
     {
-        return View();
+        var inmueble = repoI.ObtenerTodos();
+        ViewBag.Propietarios = repoP.ObtenerPropietarios();
+        if (TempData.ContainsKey("mensaje"))
+            ViewBag.mensaje = TempData["mensaje"];
+        if (TempData.ContainsKey("error"))
+            ViewBag.error = TempData["error"];
+        return View(inmueble);
     }
 
     // POST: InmueblesController/Edit/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit(int id, IFormCollection collection)
+    public ActionResult Edit(int id, Inmueble inmueble)
     {
         try
         {
+            inmueble.id = id;
+            repoI.Modificar(inmueble);
+            TempData["mensaje"] = "Datos modificados correctamente";
             return RedirectToAction(nameof(Index));
         }
-        catch
+        catch (Exception ex)
         {
-            return View();
+            ViewBag.Propietario = repoP.ObtenerPropietarios();
+            ViewBag.Error = ex.Message;
+            ViewBag.StackTrace = ex.StackTrace; 
+            return View(inmueble);
         }
     }
 
     // GET: InmueblesController/Delete/5
     public ActionResult Delete(int id)
     {
-        return View();
+        var inmueble = repoI.ObtenerTodos();
+        if (TempData.ContainsKey("mensaje"))
+            ViewBag.mensaje = TempData["mensaje"];
+        if(TempData.ContainsKey("error"))
+            ViewBag.Error = TempData["error"];  
+        return View(inmueble);
     }
 
     // POST: InmueblesController/Delete/5
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Delete(int id, IFormCollection collection)
+    public ActionResult Delete(int id, Inmueble inmueble)
     {
         try
         {
+            repoI.Baja(id);
+            TempData["mensaje"] = "Se ha eliminado correctamente";
             return RedirectToAction(nameof(Index));
         }
-        catch
+        catch (Exception ex)
         {
-            return View();
+            ViewBag.error = ex.Message;
+            ViewBag.StackTrace = ex.StackTrace;
+            return View(inmueble);
         }
     }
 }

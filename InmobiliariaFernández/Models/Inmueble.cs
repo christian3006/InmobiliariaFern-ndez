@@ -11,8 +11,6 @@ public class Inmueble
 
     public string Direccion { get; set; }
 
-    public string Ambiente { get; set; }
-
     public int Ambientes { get; set; }
 
     public int Superficie { get; set; }

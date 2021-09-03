@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaFernández.Models
 {
-    public class RepoPropietario
+    public class RepoPropietario : RepoBase
     {
-        string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=InmobiliariaFernandez;Trusted_Connection=True;MultipleActiveResultSets=true";
 
-        public RepoPropietario()
+        public RepoPropietario(IConfiguration configuration) : base (configuration)
         {
 
         }
@@ -19,6 +18,7 @@ namespace InmobiliariaFernández.Models
         public int AltaP(Propietario P)
         {
             int res = -1;
+
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 string sql = @"INSERT INTO Propietario (Nombre, Apellido, Dni, Telefono, Email, Clave) VALUES (@nombre, @apellido, @dni, @telefono, @email, @clave)
@@ -108,8 +108,8 @@ SELECT SCOPE_IDENTITY();";
             Propietario p = null;
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string sql = $"SELECT id, Nombre, Apellido, NroDpto, Dni, Telefono FROM Propietario" +
-                    $" WHERE ID=@id";
+                string sql = $"SELECT idpropietario, Nombre, Apellido, Dni, Telefono, Email, Clave FROM Propietario" +
+                    $" WHERE idpropietario=@idpropietario";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -126,7 +126,7 @@ SELECT SCOPE_IDENTITY();";
                             Dni = reader.GetString(3),
                             Telefono = reader.GetString(4),
                             Email = reader.GetString(5),
-                            Clave = reader.GetString(5)
+                            Clave = reader.GetString(6)
 
                         };
                         return p;

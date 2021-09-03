@@ -1,0 +1,64 @@
+﻿@model IEnumerable<InmobiliariaFernández.Models.Contrato>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.montoAPagar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Garante)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idInmueble)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.idInquilino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPropietario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.montoAPagar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Garante)
+            </td>
+            <td>
+                @(item.inmueble.id)
+            </td>
+            <td>
+                @(item.inquilino.Nombre + " " + item.inquilino.Apellido + " " + item.inquilino.Telefono)
+            </td>
+            <td>
+                @(item.Duenio.Nombre + " " + item.Duenio.Apellido)
+            </td>
+            <td>
+                @Html.ActionLink("Editar Contrato", "Edit", new { id=item.id }) |
+                @Html.ActionLink("Eliminar contrato", "Delete", new { id=item.id  })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

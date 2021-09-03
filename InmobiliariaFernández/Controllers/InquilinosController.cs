@@ -5,9 +5,9 @@ public class InquilinosController : Controller
 {
     RepoInquilino repositorio;
 
-    public InquilinosController()
+    public InquilinosController(IConfiguration configuration)
     {
-        repositorio = new RepoInquilino();
+        repositorio = new RepoInquilino(configuration);
     }
 
     // GET: InquilinosController
