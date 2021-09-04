@@ -16,6 +16,7 @@ namespace InmobiliariaFernández.Models
             public string Apellido { get; set; }
             
             public string Dni { get; set; }
+
             public string Telefono { get; set; }
             
             public string Email { get; set; }

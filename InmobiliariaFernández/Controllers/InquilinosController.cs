@@ -20,7 +20,8 @@ public class InquilinosController : Controller
     // GET: InquilinosController/Details/5
     public ActionResult Details(int id)
     {
-        return View();
+        var i = repositorio.ObtenerPorId(id);
+        return View(i);
     }
 
     // GET: InquilinosController/Create
